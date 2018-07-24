@@ -1,0 +1,11 @@
+[Unit]
+Description=consul server 
+Wants=network-online.target
+After=network-online.target 
+
+[Service]
+ExecStart= /bin/sh -c "/usr/bin/consul agent -server -bootstrap-expect=1 -data-dir=/tmp/consul -node=$(echo `hostname`) -bind=$(ifconfig enp3s0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') -config-dir=/etc/consul.d"
+Restart=alwaysRestartSec=10
+
+[Install]
+WantedBy=multi-user.targetIntroduction
